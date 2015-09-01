@@ -16,6 +16,8 @@ version := "1.1"
 
 scalaVersion := "2.11.7"
 
+organization := "com.boldradius"
+
 
 scalaJSStage in Global := FastOptStage
 
@@ -24,6 +26,7 @@ scalaJSStage in Global := FastOptStage
 lazy val root = project.in(file(".")).
   aggregate(js, jvm).
   settings(
+    organization := "com.boldradius",
     name := "cluster-console",
     version := Settings.version,
     commands += ReleaseCmd,
