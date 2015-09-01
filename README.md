@@ -25,7 +25,7 @@ Currently the following features are supported:
   + Join any Akka Cluster (that isn't encrypted with SSL, as it would require you specially configure for the keys, ssl certs, etc) on the fly – configured via browser.
   + Visualize the topography of each Cluster
     - [Members View](#members-view): Shows each individual ActorSystem which is joined to the cluster, with information on their hostname/IP address, port, and configured roles.
-    - [Roles View](#roles-view): Similar to Members View, shows each individual ActorSystem which is joined to the cluster, with information on their hostname/IP address, port, and configured roles. Additionally shows information on configured routers.
+    - [Roles View](#roles-view): Similar to Members View, shows each individual ActorSystem which is joined to the cluster, with information on their hostname/IP address, port, and configured roles. Additionally shows information on configured routers. Allows you to define dependencies between specific Actors, to clarify the visualization.
     - [Nodes View](#nodes-view): Shows each individual host (hostname/IP address), with each ActorSystem hanging off of that host by Port & Roles.
 
 A number of future features are planned:
