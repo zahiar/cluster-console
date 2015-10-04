@@ -62,6 +62,13 @@ To get started, we'll first need to boot the Spray HTTP Server (for running the 
 ```sbt
 > ~fastOptJS
 ```
+
+4. Open a browser at
+
+```
+localhost:9000
+```
+
     
 ## Running the Sample Cluster
   A console alone isn't enough: we'll need some Akka nodes to visualize. To do this, we need a running Akka Cluster. 
@@ -255,5 +262,20 @@ Finally, we'll boot 2 Akka nodes on `member_4`:
 samplecluster 192.168.11.24 2558 FooCluster 192.168.11.20:2551 Foo-Http &
 samplecluster 192.168.11.24 2559 FooCluster 192.168.11.20:2551 Bar-Http &
 ```
+
+#### Discover your cluster in the console:
+
+1. Goto the ClusterMap tab
+
+2. Click the '+' button beside  the "Clusters" in left window
+
+3. Enter Cluster Name.
+
+4. "App Host" is the IP of the box where the console is running
+
+5. "Seen Host" and "Port" are of the cluster you wish to discover
+
+
+
 
 ![Have fun storming the castle!](http://bytes.codes/images/have-fun-storming-the-castle.gif)

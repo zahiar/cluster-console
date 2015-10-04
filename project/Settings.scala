@@ -9,8 +9,9 @@ import org.scalajs.sbtplugin.ScalaJSPlugin.autoImport._
 object Settings {
 
   object versions {
-    val akka = "2.4.0-RC1"
+    val akka = "2.4.0"
     val akkaHttp = "1.0"
+    val autowire = "0.2.5"
     val sigarLoader = "1.6.6-rev002"
     val akkaLog4j = "0.2.0"
     val bootstrap = "3.3.2"
@@ -22,15 +23,15 @@ object Settings {
     val logBack = "1.1.2"
     val scalaLogging = "3.1.0"
     val config = "1.3.0"
-    val react = "0.12.1"
+    val react = "0.12.2"
     val scalacheck = "1.12.2"
-    val scalaCSS = "0.2.0"
+    val scalaCSS = "0.3.0"
     val scalajsDom = "0.8.0"
-    val scalajsReact = "0.9.0"
+    val scalajsReact = "0.9.2"
     val scalaRx = "0.2.8"
     val scalaTags = "0.5.2"
     val scalaz = "7.1.2"
-    val upickle = "0.2.8"
+    val upickle = "0.3.6"
     val utest = "0.3.1"
   }
 
@@ -50,8 +51,8 @@ object Settings {
 
 
   val sharedDependencies = Def.setting(Seq(
-    "com.lihaoyi" %%% "autowire" % "0.2.5",
-    "com.lihaoyi" %%% "upickle" % "0.3.4",
+    "com.lihaoyi" %%% "autowire" % versions.autowire,
+    "com.lihaoyi" %%% "upickle" % versions.upickle,
     "com.lihaoyi" %%% "utest" % "0.3.1",
     "org.webjars" % "font-awesome" % "4.3.0-1" % Provided,
     "org.webjars" % "bootstrap" % versions.bootstrap % Provided
@@ -94,15 +95,8 @@ object Settings {
     "org.webjars" % "bootstrap" % versions.bootstrap / "bootstrap.js" dependsOn "jquery.js",
     "org.webjars" % "d3js" % versions.d3 / "d3.js"
   ))
+
   /** Same dependecies, but for production build, using minified versions */
-//  val jsDependenciesProduction = Def.setting(Seq(
-//    "org.webjars" % "react" % versions.react / "react-with-addons.min.js" commonJSName "React",
-//    "org.webjars" % "jquery" % versions.jQuery / "jquery.min.js",
-//    "org.webjars" % "bootstrap" % versions.bootstrap / "bootstrap.min.js" dependsOn "jquery.min.js",
-//    "org.webjars" % "d3js" % versions.d3 / "d3.min.js" commonJSName "d3"
-//  ))
-
-
   val jsDependenciesProduction = Def.setting(Seq(
     "org.webjars" % "react" % versions.react / "react-with-addons.js" minified "react-with-addons.min.js" commonJSName "React",
     "org.webjars" % "jquery" % versions.jQuery / "jquery.js" minified "jquery.min.js",

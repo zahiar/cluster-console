@@ -23,28 +23,28 @@ object GlobalStyles extends StyleSheet.Inline {
   val nodeRemovedColor = "#B91414"
 
   val common = mixin(
-    backgroundColor(mapBackground)
+    backgroundColor(Color(mapBackground))
   )
 
   val button = style(
     padding(0.5 ex, 2 ex),
-    backgroundColor("#eee"),
+    backgroundColor(Color("#eee")),
     border(1 px, solid, black)
   )
 
   val leftNav = style("leftNav")(
     border(1 px, solid, white),
-    backgroundColor("#39484E")
+    backgroundColor(Color("#39484E"))
   )
 
   val mainHeaders = style("mainHeaders")(
-    backgroundColor(mainHeaderColor),
+    backgroundColor(Color(mainHeaderColor)),
     borderColor(white),
     borderBottom(1 px, solid)
   )
 
   val regText = style("regText")(
-    color(textColor)
+    color(Color(textColor))
   )
 
   style(
@@ -54,13 +54,13 @@ object GlobalStyles extends StyleSheet.Inline {
       paddingTop(50.px),
 
       unsafeChild("h3")(
-        color(textColor)
+        color(Color(textColor))
       ),
       unsafeChild("h2")(
-        color(textColor)
+        color(Color(textColor))
       ),
       unsafeChild("h4")(
-        color(textColor)
+        color(Color(textColor))
       )
 
     )
