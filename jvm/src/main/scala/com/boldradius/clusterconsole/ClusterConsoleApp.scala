@@ -8,15 +8,16 @@ import com.typesafe.config.ConfigFactory
 
 import scala.concurrent.duration._
 
-object ClusterConsoleApp extends App with LogF {
+trait ClusterConsoleAppBase extends LogF { self: App =>
 
-  args.logDebug("ClusterConsoleApp starting with args:" + _.toList.toString)
+  def useClusterMetrics: Boolean
 
   // todo - abstract .clusterconsole role into a variable
   val akkaConf =
-    """akka.remote.netty.tcp.hostname="127.0.0.1"
+    s"""akka.remote.netty.tcp.hostname="127.0.0.1"
       |akka.remote.netty.tcp.port=3001
       |akka.cluster.roles = [clusterconsole]
+      |akka.cluster.metrics.enabled=$useClusterMetrics
       |""".stripMargin
 
   val config = ConfigFactory.parseString(akkaConf).withFallback(ConfigFactory.load())
@@ -30,4 +31,14 @@ object ClusterConsoleApp extends App with LogF {
     "clusterconsolehttp"
   )
 
+}
+
+object ClusterConsoleApp extends App with ClusterConsoleAppBase {
+  args.logInfo(s"ClusterConsoleApp starting with args:" + _.toList.toString)
+  val useClusterMetrics = false
+}
+
+object ClusterConsoleWithMetricsApp extends App with ClusterConsoleAppBase {
+  args.logInfo(s"ClusterConsoleMetricsApp (with Metrics) starting with args:" + _.toList.toString)
+  val useClusterMetrics = true
 }
