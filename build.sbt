@@ -18,6 +18,8 @@ scalaVersion := "2.11.7"
 
 organization := "com.boldradius"
 
+maintainer := "Dave Sugden <dave@boldradius.com>, Brendan McAdams <brendan@boldradius.com> "
+
 
 scalaJSStage in Global := FastOptStage
 
