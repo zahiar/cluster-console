@@ -12,13 +12,18 @@ trait ClusterConsoleAppBase extends LogF { self: App =>
 
   def useClusterMetrics: Boolean
 
+  val clusterMetricsStanza =
+    """akka.extensions = [ "akka.cluster.metrics.ClusterMetricsExtension" ]"""
+
   // todo - abstract .clusterconsole role into a variable
   val akkaConf =
     s"""akka.remote.netty.tcp.hostname="127.0.0.1"
       |akka.remote.netty.tcp.port=3001
       |akka.cluster.roles = [clusterconsole]
-      |akka.cluster.metrics.enabled=$useClusterMetrics
+      |${if (useClusterMetrics) clusterMetricsStanza else ""}
       |""".stripMargin
+
+  println(akkaConf)
 
   val config = ConfigFactory.parseString(akkaConf).withFallback(ConfigFactory.load())
 
@@ -33,10 +38,10 @@ trait ClusterConsoleAppBase extends LogF { self: App =>
 
 }
 
-object ClusterConsoleApp extends App with ClusterConsoleAppBase {
+/*object ClusterConsoleApp extends App with ClusterConsoleAppBase {
   args.logInfo(s"ClusterConsoleApp starting with args:" + _.toList.toString)
   val useClusterMetrics = false
-}
+}*/
 
 object ClusterConsoleWithMetricsApp extends App with ClusterConsoleAppBase {
   args.logInfo(s"ClusterConsoleMetricsApp (with Metrics) starting with args:" + _.toList.toString)

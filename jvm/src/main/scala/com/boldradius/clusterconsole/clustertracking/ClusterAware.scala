@@ -3,6 +3,8 @@ package com.boldradius.clusterconsole.clustertracking
 import akka.actor._
 import akka.cluster.ClusterEvent._
 import akka.cluster.{ Cluster, Member }
+import akka.cluster.metrics.StandardMetrics.{ Cpu, HeapMemory }
+import akka.cluster.metrics.{ ClusterMetricsExtension, NodeMetrics }
 import com.boldradius.clusterconsole.core.LogF
 import com.boldradius.clusterconsole.http._
 import com.typesafe.config.ConfigFactory
@@ -60,6 +62,8 @@ class ClusterAware(systemName: String,
       classOf[LeaderChanged]
     )
 
+    ClusterMetricsExtension(newSystem).subscribe(self)
+
     cluster.joinSeedNodes(addresses)
 
   }
@@ -110,6 +114,24 @@ class ClusterAware(systemName: String,
         parent ! ClusterMemberExited(systemName, ClusterAware.toClusterMember(m, Exited))
       }
 
+    case akka.cluster.metrics.ClusterMetricsChanged(clusterMetrics) =>
+      clusterMetrics.filter(_.address == Cluster(context.system).selfAddress)
+        .foreach { nodeMetrics =>
+          logHeap(nodeMetrics)
+          logCpu(nodeMetrics)
+        }
+  }
+
+  def logHeap(nodeMetrics: NodeMetrics): Unit = nodeMetrics match {
+    case HeapMemory(address, timestamp, used, committed, max) =>
+      log.info("Used heap: {} MB", used.doubleValue / 1024 / 1024)
+    case _ => // No heap info.
+  }
+
+  def logCpu(nodeMetrics: NodeMetrics): Unit = nodeMetrics match {
+    case Cpu(address, timestamp, Some(systemLoadAverage), cpuCombined, cpuStolen, processors) =>
+      log.info("Load: {} ({} processors)", systemLoadAverage, processors)
+    case _ => // No cpu info.
   }
 
 }

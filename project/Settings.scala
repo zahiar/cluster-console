@@ -9,7 +9,7 @@ import org.scalajs.sbtplugin.ScalaJSPlugin.autoImport._
 object Settings {
 
   object versions {
-    val akka = "2.4.0"
+    val akka = "2.4.1"
     val akkaHttp = "1.0"
     val autowire = "0.2.5"
     val sigarLoader = "1.6.6-rev002"

@@ -37,6 +37,8 @@ object SampleClusterApp extends App {
     .replaceAll("%clustername%", clusterName)
     .replaceAll("%clusterseed1%", clusterSeed)).withFallback(ConfigFactory.load())
 
+  println("Config: " + clusterConfig.root.render())
+
   val clusterSystem = ActorSystem(clusterName, clusterConfig)
 
   role match {
