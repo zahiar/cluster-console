@@ -53,6 +53,8 @@ object ActivityLogComponent {
                   case ev: ClusterMemberUnreachable => (globalStyles.nodeUnreachableColor, "white")
                   case ev: ClusterMemberRemoved => (globalStyles.nodeRemovedColor, "white")
                   case ev: ClusterMemberExited => (globalStyles.nodeRemovedColor, "white")
+                  case ev: ClusterMetricCPU => (globalStyles.metricsColor, "white")
+                  case ev: ClusterMetricMemory => (globalStyles.metricsColor, "white")
                 }
                 div(cls := "row", borderTop := "1px solid white", borderBottom := "1px solid white")(
                   div(cls := "col-md-12", paddingTop := "10px", paddingBottom := "10px",

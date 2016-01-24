@@ -22,6 +22,8 @@ object GlobalStyles extends StyleSheet.Inline {
   val nodeUnreachableColor = "#D46415"
   val nodeRemovedColor = "#B91414"
 
+  val metricsColor = "#ed903f"
+
   val common = mixin(
     backgroundColor(Color(mapBackground))
   )
