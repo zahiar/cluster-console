@@ -115,7 +115,8 @@ class ClusterAware(systemName: String,
       }
 
     case akka.cluster.metrics.ClusterMetricsChanged(clusterMetrics) =>
-      clusterMetrics.filter(_.address == Cluster(context.system).selfAddress)
+      // ignore my own metrics
+      clusterMetrics.filter(_.address != Cluster(context.system).selfAddress)
         .foreach { nodeMetrics =>
           logHeap(nodeMetrics)
           logCpu(nodeMetrics)
@@ -124,13 +125,35 @@ class ClusterAware(systemName: String,
 
   def logHeap(nodeMetrics: NodeMetrics): Unit = nodeMetrics match {
     case HeapMemory(address, timestamp, used, committed, max) =>
-      log.info("Used heap: {} MB", used.doubleValue / 1024 / 1024)
+      log.debug("Address: {} Used heap: {} MB", address, used.doubleValue / 1024 / 1024)
+      val date = new java.util.Date(timestamp)
+      val usedMB = used.doubleValue / 1024 / 1024
+      val committedMB = committed.doubleValue / 1024 / 1024
+      val maxHeapMB = max.map { n =>
+        n.doubleValue / 1024 / 1024
+      }
+      parent ! ClusterMetricMemory(systemName,
+                                   HostPort(address.host.getOrElse("0.0.0.0"), address.port.getOrElse(0)),
+                                   date,
+                                   usedMB,
+                                   committedMB,
+                                   maxHeapMB)
     case _ => // No heap info.
   }
 
   def logCpu(nodeMetrics: NodeMetrics): Unit = nodeMetrics match {
     case Cpu(address, timestamp, Some(systemLoadAverage), cpuCombined, cpuStolen, processors) =>
-      log.info("Load: {} ({} processors)", systemLoadAverage, processors)
+      log.debug("Address: {} Load: {} ({} processors)", address, systemLoadAverage, processors)
+      val date = new java.util.Date(timestamp)
+      parent ! ClusterMetricCPU(systemName,
+                                HostPort(address.host.getOrElse("0.0.0.0"), address.port.getOrElse(0)),
+                                date,
+                                systemLoadAverage,
+                                cpuCombined,
+                                cpuStolen,
+                                processors)
+
+
     case _ => // No cpu info.
   }
 

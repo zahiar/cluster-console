@@ -33,6 +33,7 @@ object Settings {
     val scalaz = "7.1.2"
     val upickle = "0.3.6"
     val utest = "0.3.1"
+    val nScalaTimeVersion  = "2.2.0"
   }
 
 
@@ -77,7 +78,8 @@ object Settings {
     "com.typesafe" % "config" % versions.config,
     "org.scalaz" %% "scalaz-core" % versions.scalaz,
     "com.lihaoyi" %% "scalatags" % versions.scalaTags,
-    "io.kamon" % "sigar-loader" % versions.sigarLoader
+    "io.kamon" % "sigar-loader" % versions.sigarLoader,
+    "com.github.nscala-time" %% "nscala-time" % versions.nScalaTimeVersion
   ))
 
   //  /** Dependencies only used by the JS project (note the use of %%% instead of %%) */
