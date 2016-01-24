@@ -66,6 +66,8 @@ trait ClusterService extends Actor {
     case m @ ClusterMemberRemoved(system, clusterMember) =>
       ClusterService.refreshCluster(system)
 
+    case m: ClusterMetricsEvent =>
+    // NOOP
     case m @ DiscoveryBegun(system, seedNodes) =>
       clusterForm() = ClusterForm.initial
       discoveringClusters() = discoveringClusters() + (system -> m)

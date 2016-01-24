@@ -55,13 +55,13 @@ lazy val ReleaseCmd = Command.command("release") {
 
 lazy val DockerizeCmd = Command.command("dockerize") { state =>
 //  "release" ::
-  "set productionBuild in js := true" ::
-  "set elideOptions in js := Seq(\"-Xelide-below\", \"WARNING\")" ::
+  //"set productionBuild in js := true" ::
+  //"set elideOptions in js := Seq(\"-Xelide-below\", \"WARNING\")" ::
   "sharedProjectJS/test" ::
   "sharedProjectJS/packageJSDependencies" ::
   "sharedProjectJVM/test" ::
   "sharedProjectJVM/stage" ::
-  "set productionBuild in js := false" ::
+ // "set productionBuild in js := false" ::
   "project sharedProjectJVM" ::
   "docker:publishLocal" ::
   state

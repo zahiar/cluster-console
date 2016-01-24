@@ -20,9 +20,9 @@ object WebSocketClient extends Console {
   websocket.onerror = { (event: ErrorEvent) => }
 
   websocket.onmessage = { (event: MessageEvent) =>
-    info("WS Msg Raw: " + event.data.toString)
+    Logger.log.info("WS Msg Raw: " + event.data.toString)
     val msg: ClusterProtocol = read[ClusterProtocol](event.data.toString)
-    info("msg: " + msg)
+    Logger.log.info("msg: " + msg)
     MainDispatcher.dispatch(msg)
     event
   }

@@ -22,12 +22,14 @@ case class ClusterMemberRemoved(system: String,member: ClusterMember) extends Cl
 
 case class ClusterMemberExited(system: String,member: ClusterMember) extends ClusterEvent
 
+trait ClusterMetricsEvent extends ClusterEvent
+
 case class ClusterMetricMemory(system: String,
                                memberAddress: HostPort,
                                date: java.util.Date,
                                usedHeapMB: Double,
                                committedHeapMB: Double,
-                               maxHeapMB: Option[Double]) extends ClusterEvent
+                               maxHeapMB: Option[Double]) extends ClusterMetricsEvent
 
 case class ClusterMetricCPU(system: String,
                             memberAddress: HostPort,
@@ -36,7 +38,7 @@ case class ClusterMetricCPU(system: String,
                             cpuCombined: Option[Double],
                             cpuStolen: Option[Double],
                             processors: Int
-                            )
+                            ) extends ClusterMetricsEvent
 
 
 object ClusterEventUtil{
