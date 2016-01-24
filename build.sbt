@@ -8,11 +8,12 @@ import com.typesafe.sbt.web.Import.WebKeys._
 import com.typesafe.sbt.web.Import._
 import com.typesafe.sbt.web.SbtWeb
 import spray.revolver.RevolverPlugin.Revolver
+import com.typesafe.sbt.packager.docker.ExecCmd
 
 
 name := "cluster-console"
 
-version := "1.1"
+version := "1.1-SNAPSHOT"
 
 scalaVersion := "2.11.7"
 
@@ -32,9 +33,12 @@ lazy val root = project.in(file(".")).
     name := "cluster-console",
     version := Settings.version,
     commands += ReleaseCmd,
+    commands += DockerizeCmd,
     publish := {},
     publishLocal := {}
   )
+  .enablePlugins(SbtWeb)
+  .enablePlugins(JavaAppPackaging)
 
 // Command for building a release
 lazy val ReleaseCmd = Command.command("release") {
@@ -48,6 +52,21 @@ lazy val ReleaseCmd = Command.command("release") {
     "set productionBuild in js := false" ::
     state
 }
+
+lazy val DockerizeCmd = Command.command("dockerize") { state =>
+//  "release" ::
+  "set productionBuild in js := true" ::
+  "set elideOptions in js := Seq(\"-Xelide-below\", \"WARNING\")" ::
+  "sharedProjectJS/test" ::
+  "sharedProjectJS/packageJSDependencies" ::
+  "sharedProjectJVM/test" ::
+  "sharedProjectJVM/stage" ::
+  "set productionBuild in js := false" ::
+  "project sharedProjectJVM" ::
+  "docker:publishLocal" ::
+  state
+}
+
 val sharedSrcDir = "shared"
 
 val productionBuild = settingKey[Boolean]("Build for production")
@@ -172,9 +191,19 @@ lazy val jvm: Project = sharedProject.jvm.settings(js2jvmSettings: _*)
   NativePackagerKeys.batScriptExtraDefines += "set PRODUCTION_MODE=true",
   NativePackagerKeys.bashScriptExtraDefines += "export PRODUCTION_MODE=true",
   // reStart depends on running fastOptJS on the JS project
-  Revolver.reStart <<= Revolver.reStart dependsOn (fastOptJS in(js, Compile))
-).enablePlugins(SbtWeb).enablePlugins(JavaAppPackaging)
-
+  Revolver.reStart <<= Revolver.reStart dependsOn (fastOptJS in(js, Compile)),
+  // Runs Fabric 8, alpine based JDK. Official JDK8 is almost a gig, Alpine is ~200MB
+  // MUST be defined or defaults to java:latest, which overrides anything defined in compose
+  dockerBaseImage := "fabric8/java-alpine-openjdk8-jdk:1.0.10",
+  dockerExposedPorts ++= Seq(9000),
+  version in Docker := "latest",
+  fork := true,
+  mainClass in (Compile, run):= Some("com.boldradius.clusterconsole.ClusterConsoleWithMetricsApp")
+)
+  .enablePlugins(DockerPlugin)
+  .enablePlugins(AshScriptPlugin) // Use SBT Docker's support for busyBox to not use bash.
+  .enablePlugins(SbtWeb)
+  .enablePlugins(JavaAppPackaging)
 
 lazy val sampleCluster = (project in file("sampleCluster"))
   .settings(scalariformSettings)
