@@ -54,15 +54,7 @@ lazy val ReleaseCmd = Command.command("release") {
 }
 
 lazy val DockerizeCmd = Command.command("dockerize") { state =>
-//  "release" ::
-  //"set productionBuild in js := true" ::
-  //"set elideOptions in js := Seq(\"-Xelide-below\", \"WARNING\")" ::
-  "sharedProjectJS/test" ::
-  "sharedProjectJS/packageJSDependencies" ::
-  "sharedProjectJVM/test" ::
-  "sharedProjectJVM/stage" ::
- // "set productionBuild in js := false" ::
-  "project sharedProjectJVM" ::
+  "release" ::
   "docker:publishLocal" ::
   state
 }
@@ -198,7 +190,7 @@ lazy val jvm: Project = sharedProject.jvm.settings(js2jvmSettings: _*)
   dockerExposedPorts ++= Seq(9000),
   version in Docker := "latest",
   fork := true,
-  mainClass in (Compile, run):= Some("com.boldradius.clusterconsole.ClusterConsoleWithMetricsApp")
+  mainClass in (Compile, run):= Some("com.boldradius.clusterconsole.ClusterConsoleApp")
 )
   .enablePlugins(DockerPlugin)
   .enablePlugins(AshScriptPlugin) // Use SBT Docker's support for busyBox to not use bash.

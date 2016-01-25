@@ -6,7 +6,7 @@ import org.scalajs.dom.raw._
 import upickle.default._
 import com.boldradius.clusterconsole.http.Json._
 
-object WebSocketClient extends Console {
+object WebSocketClient {
 
   var open: Boolean = false
 
@@ -20,9 +20,7 @@ object WebSocketClient extends Console {
   websocket.onerror = { (event: ErrorEvent) => }
 
   websocket.onmessage = { (event: MessageEvent) =>
-    Logger.log.info("WS Msg Raw: " + event.data.toString)
     val msg: ClusterProtocol = read[ClusterProtocol](event.data.toString)
-    Logger.log.info("msg: " + msg)
     MainDispatcher.dispatch(msg)
     event
   }

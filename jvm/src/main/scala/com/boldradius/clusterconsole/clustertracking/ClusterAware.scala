@@ -134,7 +134,7 @@ class ClusterAware(systemName: String,
       }
       parent ! ClusterMetricMemory(systemName,
         HostPort(address.host.getOrElse("0.0.0.0"), address.port.getOrElse(0)),
-        date,
+        date.toString,
         usedMB,
         committedMB,
         maxHeapMB)
@@ -147,7 +147,7 @@ class ClusterAware(systemName: String,
       val date = new java.util.Date(timestamp)
       parent ! ClusterMetricCPU(systemName,
         HostPort(address.host.getOrElse("0.0.0.0"), address.port.getOrElse(0)),
-        date,
+        date.toString,
         systemLoadAverage,
         cpuCombined,
         cpuStolen,

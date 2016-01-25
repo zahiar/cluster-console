@@ -52,7 +52,7 @@ trait ClusterConsoleAppBase extends LogF { self: App =>
   val useClusterMetrics = false
 }*/
 
-object ClusterConsoleWithMetricsApp extends App with ClusterConsoleAppBase {
+object ClusterConsoleApp extends App with ClusterConsoleAppBase {
   args.logInfo(s"ClusterConsoleMetricsApp (with Metrics) starting with args:" + _.toList.toString)
   val useClusterMetrics = true
 }
