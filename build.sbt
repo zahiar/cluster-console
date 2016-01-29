@@ -188,6 +188,7 @@ lazy val jvm: Project = sharedProject.jvm.settings(js2jvmSettings: _*)
   // MUST be defined or defaults to java:latest, which overrides anything defined in compose
   dockerBaseImage := "fabric8/java-alpine-openjdk8-jdk:1.0.10",
   dockerExposedPorts ++= Seq(9000),
+  dockerRepository := Some("boldradius"),
   version in Docker := "latest",
   fork := true,
   mainClass in (Compile, run):= Some("com.boldradius.clusterconsole.ClusterConsoleApp")
