@@ -33,7 +33,7 @@ lazy val root = project.in(file(".")).
     name := "astrolabe",
     version := Settings.version,
     commands += ReleaseCmd,
-    commands += DockerizeCmd,
+    commands ++= Seq(DockerizeCmd, DockerizeLocalCmd, DockerizeStageCmd),
     publish := {},
     publishLocal := {}
   )
@@ -55,9 +55,22 @@ lazy val ReleaseCmd = Command.command("release") {
 
 lazy val DockerizeCmd = Command.command("dockerize") { state =>
   "release" ::
+  "docker:publish" ::
+  state
+}
+
+lazy val DockerizeLocalCmd = Command.command("dockerizeLocal") { state =>
+  "release" ::
   "docker:publishLocal" ::
   state
 }
+
+lazy val DockerizeStageCmd = Command.command("dockerizeStage") { state =>
+  "release" ::
+  "docker:stage" ::
+  state
+}
+
 
 val sharedSrcDir = "shared"
 
