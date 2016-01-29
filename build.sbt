@@ -11,7 +11,7 @@ import spray.revolver.RevolverPlugin.Revolver
 import com.typesafe.sbt.packager.docker.ExecCmd
 
 
-name := "cluster-console"
+name := "astrolabe"
 
 version := "1.1-SNAPSHOT"
 
@@ -30,7 +30,7 @@ lazy val root = project.in(file(".")).
   aggregate(js, jvm).
   settings(
     organization := "com.boldradius",
-    name := "cluster-console",
+    name := "astrolabe",
     version := Settings.version,
     commands += ReleaseCmd,
     commands += DockerizeCmd,
