@@ -55,18 +55,21 @@ lazy val ReleaseCmd = Command.command("release") {
 
 lazy val DockerizeCmd = Command.command("dockerize") { state =>
   "release" ::
+  "project sharedProjectJVM" ::
   "docker:publish" ::
   state
 }
 
 lazy val DockerizeLocalCmd = Command.command("dockerizeLocal") { state =>
   "release" ::
+  "project sharedProjectJVM" ::
   "docker:publishLocal" ::
   state
 }
 
 lazy val DockerizeStageCmd = Command.command("dockerizeStage") { state =>
   "release" ::
+  "project sharedProjectJVM" ::
   "docker:stage" ::
   state
 }
@@ -153,7 +156,7 @@ lazy val sharedProject = crossProject.in(file("."))
     // define where the JS-only application will be hosted by the Workbench plugin
     localUrl :=("localhost", 13131),
     refreshBrowsers <<= refreshBrowsers.triggeredBy(fastOptJS in Compile),
-    bootSnippet := "ClusterConsoleApp().main();"
+    bootSnippet := "astrolabeApp().main();"
   )
 
 // configure a specific directory for scalajs output
@@ -201,10 +204,11 @@ lazy val jvm: Project = sharedProject.jvm.settings(js2jvmSettings: _*)
   // MUST be defined or defaults to java:latest, which overrides anything defined in compose
   dockerBaseImage := "fabric8/java-alpine-openjdk8-jdk:1.0.10",
   dockerExposedPorts ++= Seq(9000),
-  dockerRepository := Some("boldradius"),
   version in Docker := "latest",
+  packageName in Docker := "astrolabe",
+  dockerRepository in Docker := Some("boldradius"),
   fork := true,
-  mainClass in (Compile, run):= Some("com.boldradius.clusterconsole.ClusterConsoleApp")
+  mainClass in (Compile, run):= Some("com.boldradius.astrolabe.ClusterConsoleApp")
 )
   .enablePlugins(DockerPlugin)
   .enablePlugins(AshScriptPlugin) // Use SBT Docker's support for busyBox to not use bash.
