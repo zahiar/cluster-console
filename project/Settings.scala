@@ -34,6 +34,7 @@ object Settings {
     val upickle = "0.3.6"
     val utest = "0.3.1"
     val nScalaTimeVersion  = "2.2.0"
+    val scalaD3 = "0.2.0"
   }
 
 
@@ -88,7 +89,8 @@ object Settings {
     "com.github.japgolly.scalajs-react" %%% "extra" % versions.scalajsReact,
     "com.github.japgolly.scalacss" %%% "ext-react" % versions.scalaCSS,
     "org.scala-js" %%% "scalajs-dom" % "0.8.0",
-    "com.lihaoyi" %%% "scalarx" % "0.2.8"
+    "com.lihaoyi" %%% "scalarx" % "0.2.8",
+    "org.singlespaced" %%% "scalajs-d3" % versions.scalaD3
   ))
 
   val jsDependencies = Def.setting(Seq(
