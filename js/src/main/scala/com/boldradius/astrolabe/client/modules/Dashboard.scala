@@ -8,8 +8,15 @@ import japgolly.scalajs.react.{ ReactComponentB, _ }
 object Dashboard {
   // create the React component for Dashboard
   val component = ReactComponentB[RouterCtl[Loc]]("Dashboard")
-    .render((P, S) => {
-      console.log("Dashboard Initialised.")
-      div(cls := "container", paddingTop := "6px")("Hey Katrin!$$$$$$$$ This is the Dashboard Module.")
+    .render(router => {
+      div(cls := "container", paddingTop := "6px")(
+        div(cls := "col-md-12")(
+          span(color := "white", fontSize := "15px")(
+            b(
+              "Dashboard. Needs some content."
+            )
+          )
+        )
+      )
     }).build
 }

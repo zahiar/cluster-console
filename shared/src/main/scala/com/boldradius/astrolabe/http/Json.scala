@@ -52,7 +52,7 @@ object Json {
         Js.Str(write[ClusterMemberRemoved](r))
       )
 
-    case r: ClusterMetricMemory =>
+/*    case r: ClusterMetricMemory =>
       Js.Arr(
         Js.Num(5),
         Js.Str(write[ClusterMetricMemory](r))
@@ -62,7 +62,7 @@ object Json {
       Js.Arr(
         Js.Num(6),
         Js.Str(write[ClusterMetricCPU](r))
-      )
+      )*/
 
 //    case r: ClusterUnjoin =>
 //      Js.Arr(
