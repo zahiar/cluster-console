@@ -90,7 +90,8 @@ object Settings {
     "com.github.japgolly.scalacss" %%% "ext-react" % versions.scalaCSS,
     "org.scala-js" %%% "scalajs-dom" % "0.8.0",
     "com.lihaoyi" %%% "scalarx" % "0.2.8",
-    "org.singlespaced" %%% "scalajs-d3" % versions.scalaD3
+    "org.singlespaced" %%% "scalajs-d3" % versions.scalaD3,
+    "com.github.chandu0101.scalajs-react-components" %%% "core" % "0.2.8"
   ))
 
   val jsDependencies = Def.setting(Seq(
