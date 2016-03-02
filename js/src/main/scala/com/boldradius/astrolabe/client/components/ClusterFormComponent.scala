@@ -114,7 +114,7 @@ object ClusterFormComponent {
   }
 
   def component = ReactComponentB[EditClusterProps]("ClusterForm")
-    .initialStateP(P => {
+    .initialState_P(P => {
       State(P.clusterForm, 0, true, false)
     }) // initial state
     .backend(new Backend(_))

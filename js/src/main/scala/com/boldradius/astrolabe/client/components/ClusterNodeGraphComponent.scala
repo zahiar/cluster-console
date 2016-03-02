@@ -35,7 +35,7 @@ object ClusterNodeGraphComponent {
   }
 
   def component = ReactComponentB[Props]("ClusterNodeGraph")
-    .initialStateP(P => {
+    .initialState_P(P => {
       State(P.store.getSelectedCluster())
     }).backend(new Backend(_))
     .render((P, S, B) => {

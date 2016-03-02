@@ -101,7 +101,7 @@ object RolesFormComponent {
   }
 
   val component = ReactComponentB[Props]("DiscoveringClusterComponent")
-    .initialStateP(P =>
+    .initialState_P(P =>
       State(P.cluster.dependencies, P.cluster.getRoles, Seq.empty[String], Seq.empty[String], None, DistributedRouter(""))
     )
     .backend(new Backend(_))

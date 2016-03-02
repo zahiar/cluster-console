@@ -30,7 +30,7 @@ object DiscoveringClusterComponent {
   }
 
   val component = ReactComponentB[Props]("DiscoveringClusterComponent")
-    .initialStateP(P => {
+    .initialState_P(P => {
       State()
     }) // initial state
     .backend(new Backend(_))

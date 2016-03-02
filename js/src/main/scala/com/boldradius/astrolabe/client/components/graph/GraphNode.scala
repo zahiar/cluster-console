@@ -20,7 +20,7 @@ object GraphNode {
   }
 
   val component = ReactComponentB[Props]("GraphNode")
-    .initialStateP(P => State(false))
+    .initialState_P(P => State(false))
     .backend(new Backend(_))
     .render { (P, S, B) =>
       g(

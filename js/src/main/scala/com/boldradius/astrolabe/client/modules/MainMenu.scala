@@ -5,7 +5,7 @@ import com.boldradius.astrolabe.client.style.Icon.Icon
 import com.boldradius.astrolabe.client.style.{ GlobalStyles, Icon }
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.OnUnmount
-import japgolly.scalajs.react.extra.router2.RouterCtl
+import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.all._
 
 import scalacss.ScalaCssReact._

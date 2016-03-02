@@ -255,7 +255,7 @@ object Graph {
   }
 
   val component = ReactComponentB[Props]("Graph")
-    .initialStateP { P =>
+    .initialState_P { P =>
 
       val force = d3.layout.force()
         .size(List[Double](P.width, P.height).toJsArray)

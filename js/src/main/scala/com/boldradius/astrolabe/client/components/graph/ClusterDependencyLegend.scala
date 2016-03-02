@@ -20,7 +20,7 @@ object ClusterDependencyLegend {
   }
 
   val component = ReactComponentB[Props]("ClusterDependencyLegend")
-    .initialStateP(P => State(P.selected))
+    .initialState_P(P => State(P.selected))
     .backend(new Backend(_))
     .render { (P, S, B) =>
 
