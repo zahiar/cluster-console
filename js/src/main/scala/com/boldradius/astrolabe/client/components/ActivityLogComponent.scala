@@ -36,8 +36,8 @@ object ActivityLogComponent {
   val component = ReactComponentB[Props]("ActivityLog")
     .initialState(State())
     .backend(new Backend(_))
-    .render((P, S, B) => {
-
+    .renderPS(($, P, S) => {
+      val B = $.backend
       div(paddingTop := "30px")(
         div(cls := "row", height := "200px")(
           div(cls := "col-md-12", maxHeight := "600px", overflowY := "auto")(

@@ -105,7 +105,7 @@ object RolesFormComponent {
       State(P.cluster.dependencies, P.cluster.getRoles, Seq.empty[String], Seq.empty[String], None, DistributedRouter(""))
     )
     .backend(new Backend(_))
-    .render((P, S, B) =>
+    .renderPS(($, P, S) =>
 
       Modal(Modal.Props(
         header = be => span(button(tpe := "button", cls := "pull-right", onClick --> be.hide(), Icon.close), h4(color := "black")("Describe Dependencies")),

@@ -35,7 +35,7 @@ object Bootstrap {
     case class Props(onClick: () => Unit, style: CommonStyle.Value = CommonStyle.default, addStyles: Seq[StyleA] = Seq())
 
     val component = ReactComponentB[Props]("Button")
-      .render { (P, C) =>
+      .renderPC { ($, P, C) =>
         button(bss.buttonOpt(P.style), P.addStyles, tpe := "button", onClick --> P.onClick())(C)
       }.build
 
@@ -48,7 +48,7 @@ object Bootstrap {
     case class Props(heading: String, style: CommonStyle.Value = CommonStyle.default)
 
     val component = ReactComponentB[Props]("Panel")
-      .render { (P, C) =>
+      .renderPC { ($, P, C) =>
         div(bss.panelOpt(P.style))(
           div(bss.panelHeading)(P.heading),
           div(bss.panelBody)(C)
@@ -74,14 +74,15 @@ object Bootstrap {
       // jQuery event handler to be fired when the modal has been hidden
       def hidden(e: JQueryEventObject): js.Any = {
         // inform the owner of the component that the modal was closed/hidden
-        t.props.closed()
+        //t.props.closed()
       }
     }
 
     val component = ReactComponentB[Props]("Modal")
       .stateless
       .backend(new Backend(_))
-      .render((P, C, _, B) => {
+      .renderPCS(($, P, C, S) => {
+        val B = $.backend
         val modalStyle = bss.modal
         div(modalStyle.modal, modalStyle.fade, role := "dialog", aria.hidden := true,
           div(modalStyle.dialog,
@@ -93,13 +94,10 @@ object Bootstrap {
           )
         )
       })
-      .componentDidMount(scope => {
-        val P = scope.props
-        // instruct Bootstrap to show the modal
-        jQuery(scope.getDOMNode()).modal(js.Dynamic.literal("backdrop" -> P.backdrop, "keyboard" -> P.keyboard, "show" -> true))
-        // register event listener to be notified when the modal is closed
-        jQuery(scope.getDOMNode()).on("hidden.bs.modal", null, null, scope.backend.hidden _)
-      })
+      // todo - reinstate modal boot
+//      .componentDidMount(scope => {
+//        val P = scope.props
+//      })
       .build
 
     def apply(props: Props, children: ReactNode*) = component(props, children)

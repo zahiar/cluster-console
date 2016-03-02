@@ -38,7 +38,8 @@ object ClusterNodeGraphComponent {
     .initialState_P(P => {
       State(P.store.getSelectedCluster())
     }).backend(new Backend(_))
-    .render((P, S, B) => {
+    .renderPS(($, P, S) => {
+      val B = $.backend
       S.cluster.fold(span(""))(cluster => {
         div(
           Graph(cluster.system, P.mode, 1400, 900, P.store, false)

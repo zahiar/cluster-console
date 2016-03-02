@@ -34,8 +34,8 @@ object DiscoveringClusterComponent {
       State()
     }) // initial state
     .backend(new Backend(_))
-    .render((P, S, B) => {
-
+    .renderPS(($, P, S) => {
+      val B = $.backend
       div(paddingTop := "30px")(
         if (P.discovering().isEmpty) {
           span("")

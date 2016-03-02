@@ -12,7 +12,7 @@ object GraphLink {
   case class Props(link: ClusterGraphLink, key: Int, mode: Mode)
 
   val component = ReactComponentB[Props]("GraphLink")
-    .render { P =>
+    .renderP { ($, P) =>
 
       P.mode match {
         case Members =>

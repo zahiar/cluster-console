@@ -76,7 +76,8 @@ object ClusterMap {
   val component = ReactComponentB[Props]("Clusters")
     .initialState(State(false, Members)) // initial state from TodoStore
     .backend(new Backend(_))
-    .render((P, S, B) => {
+    .renderPS(($, P, S) => {
+      val B = $.backend
 
       log.debug("*** showClusterForm  " + S.showClusterForm)
 

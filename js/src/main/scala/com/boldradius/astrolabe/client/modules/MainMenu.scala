@@ -31,7 +31,8 @@ object MainMenu {
   private val MainMenu = ReactComponentB[Props]("MainMenu")
     .stateless
     .backend(new Backend(_))
-    .render((P, _, B) => {
+    .renderP(($, P) => {
+      val B = $.backend
       ul(bss.navbar)(
         // build a list of menu items
         for (item <- menuItems) yield {

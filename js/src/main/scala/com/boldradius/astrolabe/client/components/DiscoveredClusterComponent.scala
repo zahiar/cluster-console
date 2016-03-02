@@ -55,8 +55,8 @@ object DiscoveredClusterComponent {
       State(None)
     }) // initial state
     .backend(new Backend(_))
-    .render((P, S, B) => {
-
+    .renderPS(($, P, S) => {
+      val B = $.backend
       log.debug("************* S.rolesOpen " + S.rolesOpen)
 
       div(paddingTop := "30px")(

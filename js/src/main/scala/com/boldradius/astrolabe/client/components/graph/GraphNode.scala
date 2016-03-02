@@ -22,7 +22,8 @@ object GraphNode {
   val component = ReactComponentB[Props]("GraphNode")
     .initialState_P(P => State(false))
     .backend(new Backend(_))
-    .render { (P, S, B) =>
+    .renderPS { ($, P, S) =>
+      val B = $.backend
       g(
         circle(Attrs.cls := "node", Attrs.id := P.node.index, r := getRadius(P.mode, P.node), cx := P.node.x, cy := P.node.y,
           fill := {

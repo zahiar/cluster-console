@@ -22,8 +22,8 @@ object ClusterDependencyLegend {
   val component = ReactComponentB[Props]("ClusterDependencyLegend")
     .initialState_P(P => State(P.selected))
     .backend(new Backend(_))
-    .render { (P, S, B) =>
-
+    .renderPS { ($, P, S) =>
+      val B = $.backend
       val label = P.dep.tpe.name + ": " + P.dep.tpe.typeName + ". " + P.dep.roles.mkString(",") + "-->" + P.dep.dependsOn.mkString(",")
 
       val rectwidth = (label.length * 9) + 20

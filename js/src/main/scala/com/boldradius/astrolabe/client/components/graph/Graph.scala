@@ -273,7 +273,9 @@ object Graph {
       State(nodes, links, force)
 
     }.backend(new Backend(_))
-    .render((P, S, B) => {
+    .renderPS (($, P, S) => {
+
+      val B = $.backend
 
       val selectedDeps = P.store.getSelectedDeps().getOrElse(P.system, Nil)
 

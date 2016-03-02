@@ -118,8 +118,8 @@ object ClusterFormComponent {
       State(P.clusterForm, 0, true, false)
     }) // initial state
     .backend(new Backend(_))
-    .render((P, S, B) => {
-
+    .renderPS(($, P, S) => {
+      val B = $.backend
       Modal(Modal.Props(be => span(button(tpe := "button", cls := "pull-right", onClick --> be.hide(), Icon.close), h4(color := "black")("Discover Cluster")),
         be => span(Button(Button.Props(() => { P.editHandler(S.clusterForm); be.hide() }), "OK")),
         () => B.hide),
